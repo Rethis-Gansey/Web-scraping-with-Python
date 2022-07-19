@@ -1,0 +1,65 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+
+import requests
+from bs4 import BeautifulSoup
+import time
+
+url = ["https://cookpad.com/co/recetas/194594-como-hacer-tamales-santandereanos", "https://mmmole.com/receta-de-mole-poblano-y-enmoladas/", "https://www.indianhealthyrecipes.com/chicken-biryani-recipe/"]
+
+link1 = "https://mmmole.com/receta-de-mole-poblano-y-enmoladas/"
+response1 = requests.get(link1)
+
+if response1.ok:
+    soup1 = BeautifulSoup(response1.text, 'lxml')
+    title1 = soup1.find('title')
+    ingredients1 = soup1.find('div',{'class': 'wprm-recipe-ingredients-container wprm-recipe-2113-ingredients-container wprm-block-text-normal wprm-ingredient-style-regular'})
+    nbr_ingredients1 = len(ingredients1.find_all('li'))
+    spices1 = soup1.find('div',{'class': 'wprm-recipe-ingredients-container wprm-recipe-2113-ingredients-container wprm-block-text-normal wprm-ingredient-style-regular'}).find('div', {'class':'wprm-recipe-ingredient-group'})
+    nbr_spiced1 = len(spices1.find_all('li'))
+    total_time = soup1.find('span', {'class':'wprm-recipe-time wprm-block-text-normal'}).text
+    prep_time1 = 'Not directly available but we can say 20 minutes after reading the text '
+    cook_time1 = 'Not directly available but we can say 40 minutes after reading the text'
+    appliances1 = 'stove, grill'
+    print(nbr_ingredients1, nbr_spiced1, total_time)
+    
+    
+
+link2 = 'https://www.indianhealthyrecipes.com/chicken-biryani-recipe/'
+response2 = requests.get(link2)
+
+if response2.ok:
+    soup2 = BeautifulSoup(response2.text, 'lxml')
+    title2 = soup2.find('title').text
+    ingredients2 = soup2.find('div', {'class': 'wprm-recipe-ingredients-container wprm-recipe-38860-ingredients-container wprm-block-text-normal wprm-ingredient-style-regular'})
+    nbr_ingredients2 = len(ingredients2.find_all('li'))
+    spices2 = soup2.find('div', {'class': 'wprm-recipe-ingredient-group'})
+    nbr_spices2 = len(spices2.find_all('li'))
+    prep_time2 = soup2.find('div', {'class': 'wprm-recipe-block-container wprm-recipe-block-container-separated wprm-block-text-normal wprm-recipe-time-container wprm-recipe-prep-time-container'}).find('span', {'class':'wprm-recipe-time wprm-block-text-normal'}).text
+    cook_time2 = soup2.find('div', {'class': 'wprm-recipe-block-container wprm-recipe-block-container-separated wprm-block-text-normal wprm-recipe-time-container wprm-recipe-cook-time-container'}).find('span', {'class':'wprm-recipe-time wprm-block-text-normal'}).text
+    total_time2 = soup2.find('div', {'class': 'wprm-recipe-block-container wprm-recipe-block-container-separated wprm-block-text-normal wprm-recipe-time-container wprm-recipe-total-time-container'}).find('span', {'class':'wprm-recipe-time wprm-block-text-normal'}).text
+    appliances2 = "por, cooker, pressure cooker"
+    print(nbr_ingredients2, nbr_spices2, prep_time2, cook_time2, total_time2)
+
+
+link3 = 'https://cookpad.com/co/recetas/194594-como-hacer-tamales-santandereanos'
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+response3 = requests.get(link3, headers=headers)
+
+if response3.ok:
+    soup3 = BeautifulSoup(response3.text, 'lxml')
+    title3 = soup3.find('title').text
+    ingredients3 = soup3.find('div', {'class': 'ingredient-list'})
+    nbr_ingredients3 = len(ingredients3.find_all('li'))
+    spices3 = soup3.find('li', {'id': 'ingredient_1511763'})
+    nbr_spices3 = 3
+    prep_time3 = 'Not available'
+    cook_time3= 'Not available'
+    total_time3 = soup3.find('span', {'class': 'px-rg'}).find('span', {'class': 'mise-icon-text'}).text
+    appliances3 = "fridge,cooker"
+    print(nbr_ingredients3, nbr_spices3, prep_time3, cook_time3, total_time3, appliances3)
